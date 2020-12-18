@@ -5,6 +5,9 @@ var tableData = data;
 // Global variables defined
 const bodyData = document.getElementById('body-data')
 const inputDate = document.getElementById('datetime')
+const inputCity = document.getElementById('city')
+const inputState = document.getElementById('state')
+const inputCountry = document.getElementById('country')
 //console.log(inputDate)
 const submitBtn = document.getElementById('filter-btn')
 //console.log(submitBtn)
@@ -45,13 +48,40 @@ const submitBtn = document.getElementById('filter-btn')
 
 //step 1
 //I want to grab the value typed into the input when i push the button
-function filterByDate(){
-    submitBtn.onclick = () =>{
+function filterByCriteria(){
+  const arrayOfShapes = data.map(data=> data.shape)
+const uniqueShapes = [...new Set(arrayOfShapes)]
+const select = document.getElementById('dropdown-shapes')
+uniqueShapes.map(shape=>{
+   const option = document.createElement('option')
+   option.innerHTML = shape
+  select.appendChild(option)
+})
+console.log(uniqueShapes)
+    
+submitBtn.onclick = () =>{
+      
+      
       //console.log('the click func is working')
       //console.log(inputDate.value)
       let filterDate = inputDate.value
+      let filterCountry = inputCountry.value
+      let filterState = inputState.value
+      let filterCity = inputCity.value
+      let filterShape = select.value
+      //verify can return values...function filter needs added
+      //console.log(filterCity, filterState, filterCountry, filterShape)
       // create variable to store filtered data
-      const newData = filterDate === "" ? data : data.filter(item=>item.datetime === filterDate)
+      //const newData = filterDate === "" ? data : data.filter(item=>item.datetime === filterDate)
+      const newData = data.filter(item=>
+        filterDate !== "" && item.datetime === filterDate &&
+        filterCountry !== "" && item.country === filterCountry.toLowercase() &&
+        filterState !== "" && item.city === filterCity.toLowercase() &&
+        filterCity !== "" && item.state === filterState.toLowercase() &&
+        filterShape !== "" && item.shape=== filterShape
+        )
+//filter works if all values are filled out in lower case -- cannot autofill from browser
+//
       //console.log(newData)
       // replace existing table with filtered data(cleaning tbody then render filter data)
       bodyData.innerHTML=''
@@ -70,7 +100,7 @@ function filterByDate(){
 //we want to call the function to render data when the window loads
 window.onload = () =>{
     renderData(data)
-    filterByDate()
+    filterByCriteria()
   }
   
   
