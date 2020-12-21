@@ -5,25 +5,8 @@ var tableData = data;
 // Global variables defined
 const bodyData = document.getElementById("body-data");
 const inputDate = document.getElementById("datetime");
-const inputCity = document.getElementById("city");
-const inputState = document.getElementById("state");
-const inputCountry = document.getElementById("country");
-//console.log(inputDate)
 const submitBtn = document.getElementById("filter-btn");
 const clearBtn = document.getElementById("clear-btn");
-
-//console.log(submitBtn)
-// function to add rows for my table of data
-// function renderData(data){
-//     //generate a row for every element in the array of data
-//     data.map((singleItem,i)=>{
-//     const tr = document.createElement('tr')
-//     tr.innerHTML= `
-//     <th>${i}</th>`
-//    //append each row to the table body
-//     bodyData.appendChild(tr)
-
-//     })}
 
 function renderData(data) {
   //generate a row for every element in the array of data
@@ -51,10 +34,6 @@ function clearAll() {
   clearBtn.onclick = () => {
     //I'm cleaning all the input so that they will be empty and ready for another filter search
     inputDate.value = "";
-    inputCity.value = "";
-    inputState.value = "";
-    inputCountry.value = "";
-    select.value = "";
     bodyData.innerHTML = "";
 
     renderData(data);
@@ -63,25 +42,13 @@ function clearAll() {
 //step 1
 //I want to grab the value typed into the input when i push the button
 function filterByCriteria() {
-  const arrayOfShapes = data.map((data) => data.shape);
-  const uniqueShapes = [...new Set(arrayOfShapes)];
-  const select = document.getElementById("dropdown-shapes");
-  uniqueShapes.map((shape) => {
-    const option = document.createElement("option");
-    option.innerHTML = shape;
-    select.appendChild(option);
-  });
-  console.log(uniqueShapes);
+  
 
   submitBtn.onclick = () => {
     //console.log('the click func is working')
     //console.log(inputDate.value)
     let filterDate = inputDate.value;
-    let filterCountry = inputCountry.value;
-    let filterState = inputState.value;
-    let filterCity = inputCity.value;
-    let filterShape = select.value;
-    //verify can return values...function filter needs added
+        //verify can return values...function filter needs added
     //console.log(filterCity, filterState, filterCountry, filterShape)
     // create variable to store filtered data
     //const newData = filterDate === "" ? data : data.filter(item=>item.datetime === filterDate)
@@ -91,25 +58,6 @@ function filterByCriteria() {
     if (filterDate !== "") {
       newData = newData.filter((item) => item.datetime === filterDate);
     }
-    if (filterCountry !== "") {
-      newData = newData.filter(
-        (item) => item.country === filterCountry.toLowerCase()
-      );
-    }
-    if (filterCity !== "") {
-      newData = newData.filter(
-        (item) => item.city === filterCity.toLowerCase()
-      );
-    }
-    if (filterShape !== "") {
-      newData = newData.filter((item) => item.shape === filterShape);
-    }
-    if (filterState !== "") {
-      newData = newData.filter(
-        (item) => item.state === filterState.toLowerCase()
-      );
-    }
-
     //filter works if all values are filled out in lower case -- cannot autofill from browser
     //
     //console.log(newData)
